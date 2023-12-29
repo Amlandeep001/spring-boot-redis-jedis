@@ -8,11 +8,10 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication
 @EnableConfigurationProperties
 @EnableCaching
-public class SpringDataRedisExampleApplication {
-
-	public static void main(String[] args) {
-        SpringApplication.run(SpringDataRedisExampleApplication.class, args);
-        
-    }
-
+public class SpringDataRedisExampleApplication
+{
+	public static void main(String[] args)
+	{
+		SpringApplication.run(SpringDataRedisExampleApplication.class, args);
+	}
 }

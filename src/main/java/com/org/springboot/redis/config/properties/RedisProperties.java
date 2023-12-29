@@ -11,8 +11,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Configuration
 @ConfigurationProperties(prefix = "redis.server")
-public class RedisProperties {
-
+public class RedisProperties
+{
 	String hostname;
 	int port;
 }

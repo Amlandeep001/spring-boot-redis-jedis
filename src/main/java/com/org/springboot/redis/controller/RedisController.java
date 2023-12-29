@@ -17,36 +17,39 @@ import com.org.springboot.redis.respository.ProductDao;
 
 @RestController
 @RequestMapping("/product")
-public class RedisController {
+public class RedisController
+{
+	private final ProductDao dao;
 
-    private final ProductDao dao;
-    
-    public RedisController(ProductDao dao) {
-    	
-    	this.dao = dao;
-    	
-    }
+	public RedisController(ProductDao dao)
+	{
+		this.dao = dao;
+	}
 
-    @PostMapping
-    public Product save(@RequestBody Product product) {
-        return dao.save(product);
-    }
+	@PostMapping
+	public Product save(@RequestBody Product product)
+	{
+		return dao.save(product);
+	}
 
-    @GetMapping
-    public List<Product> getAllProducts() {
-        return dao.findAll();
-    }
+	@GetMapping
+	public List<Product> getAllProducts()
+	{
+		return dao.findAll();
+	}
 
-    @GetMapping("/{id}")
-    @Cacheable(key = "#id",value = "Product",unless = "#result.price > 1000")
-    public Product findProduct(@PathVariable int id) {
-        return dao.findProductById(id);
-    }
+	@GetMapping("/{id}")
+	@Cacheable(key = "#id", value = "Product", unless = "#result.price > 1000")
+	public Product findProduct(@PathVariable int id)
+	{
+		return dao.findProductById(id);
+	}
 
-    @DeleteMapping("/{id}")
-    @CacheEvict(key = "#id",value = "Product")
-    public String remove(@PathVariable int id) {
-        return dao.deleteProduct(id);
-    }
+	@DeleteMapping("/{id}")
+	@CacheEvict(key = "#id", value = "Product")
+	public String remove(@PathVariable int id)
+	{
+		return dao.deleteProduct(id);
+	}
 
 }

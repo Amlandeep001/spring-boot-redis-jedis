@@ -13,34 +13,36 @@ import com.org.springboot.redis.config.properties.RedisProperties;
 
 @Configuration
 @EnableRedisRepositories
-public class RedisConfig {
-	
+public class RedisConfig
+{
 	private final RedisProperties redisProperties;
-	
-	public RedisConfig(RedisProperties redisProperties){
-		
+
+	public RedisConfig(RedisProperties redisProperties)
+	{
 		this.redisProperties = redisProperties;
 	}
 
-    @Bean
-    public JedisConnectionFactory connectionFactory() {
-        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-        configuration.setHostName(redisProperties.getHostname());
-        configuration.setPort(redisProperties.getPort());
-        return new JedisConnectionFactory(configuration);
-    }
+	@Bean
+	JedisConnectionFactory connectionFactory()
+	{
+		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
+		configuration.setHostName(redisProperties.getHostname());
+		configuration.setPort(redisProperties.getPort());
+		return new JedisConnectionFactory(configuration);
+	}
 
-    @Bean
-    public RedisTemplate<String, Object> template() {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
-        template.setConnectionFactory(connectionFactory());
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setHashKeySerializer(new StringRedisSerializer());
-        template.setHashKeySerializer(new JdkSerializationRedisSerializer());
-        template.setValueSerializer(new JdkSerializationRedisSerializer());
-        template.setEnableTransactionSupport(true);
-        template.afterPropertiesSet();
-        return template;
-    }
+	@Bean
+	RedisTemplate<String, Object> template(JedisConnectionFactory connectionFactory)
+	{
+		RedisTemplate<String, Object> template = new RedisTemplate<>();
+		template.setConnectionFactory(connectionFactory);
+		template.setKeySerializer(new StringRedisSerializer());
+		template.setHashKeySerializer(new StringRedisSerializer());
+		template.setHashKeySerializer(new JdkSerializationRedisSerializer());
+		template.setValueSerializer(new JdkSerializationRedisSerializer());
+		template.setEnableTransactionSupport(true);
+		template.afterPropertiesSet();
+		return template;
+	}
 
 }
